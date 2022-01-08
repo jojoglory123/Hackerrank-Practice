@@ -22,13 +22,19 @@ class SLinkedList:
         node.next = self.head
         self.head = node
 
-    def insert_node_in_middle(self, node_middle, node_data):
-        if not node_middle:
-            print("No such middle node")
-            return
+    def insert_node_at_position(self, node_data, position):
         node = Node(node_data)
-        node.next = node_middle.next
-        node_middle.next = node
+        if position == 0:
+            node.next = self.head
+            self.head = node
+        else:
+            temp = self.head
+            for i in range(position - 1):
+                temp = temp.next
+
+            node.next = temp.next
+            temp.next = node
+
 
     def delete_position(self, position):
         if position == 0:
@@ -50,12 +56,31 @@ class SLinkedList:
                 return
         self.delete_position(position)
 
+    def ReverseLinkedList(self):
+        prev = None
+        current = self.head
+        while current:
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        self.head = prev
+
 
     def printLinkedList(self):
         temp = self.head
         while temp:
             print(temp.data)
             temp = temp.next
+
+    def printReversedLinkedList(self):
+        temp = self.head
+        ans = []
+        while temp:
+            ans.append(temp.data)
+            temp = temp.next
+        for i in list(reversed(ans)):
+            print(i)
 
 llist_count = int(input())
 llist = SLinkedList()
@@ -64,5 +89,7 @@ for i in range(llist_count):
     llist_item = int(input())
     llist.insert_node_at_end(llist_item)
 
-llist.delete_value(4)
+
+
+llist.ReverseLinkedList()
 llist.printLinkedList()
