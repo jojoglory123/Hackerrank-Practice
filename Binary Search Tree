@@ -1,0 +1,103 @@
+class Node:
+    def __init__(self, node_data):
+        self.left = None
+        self.right = None
+        self.data = node_data
+        self.level = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, node_data):
+        node = Node(node_data)
+        if not self.root:
+            self.root = node
+        else:
+            current = self.root
+            while True:
+                if node.data < current.data:
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = node
+                        break
+                elif node.data > current.data:
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = node
+                        break
+                else:
+                    break
+
+
+
+
+def PreorderTraversalList(root):
+    ls = []
+
+    def PreorderTraversal(root):
+        # Write your code here
+        if root:
+            ls.append(root.data)
+            PreorderTraversal(root.left)
+            PreorderTraversal(root.right)
+
+    PreorderTraversal(root)
+    print(ls)
+
+def PreorderTraversal(root): #mid -> left -> right
+    # Write your code here
+    if root:
+        print(root.data, end=' ')
+        PreorderTraversal(root.left)
+        PreorderTraversal(root.right)
+
+def PostorderTraversal(root): #left -> right -> mid
+    if root:
+        PostorderTraversal(root.left)
+        PostorderTraversal(root.right)
+        print(root.data, end=" ")
+
+
+def InOrderTraversal(root): #left -> mid -> right
+    if root:
+        InOrderTraversal(root.left)
+        print(root.data, end=" ")
+        InOrderTraversal(root.right)
+
+
+def height(root):
+    if root:
+        return max(1 + height(root.left), 1 + height(root.right))
+    else:
+        return -1
+
+
+def levelOrder(root):
+    # Write your code here
+    def height(root):
+        if root:
+            return max(1 + height(root.left), 1 + height(root.right))
+        else:
+            return -1
+
+    def _levelOrder(root, level):
+        if root:
+            if level == 0:
+                print(root.data, end=" ")
+            else:
+                _levelOrder(root.left, level - 1)
+                _levelOrder(root.right, level - 1)
+
+    for level in range(height(root) + 1):
+        _levelOrder(root, level)
+
+BST_count = int(input())
+BST_item = list(map(int, input().rstrip().split()))
+BST = BinarySearchTree()
+for i in BST_item:
+    BST.insert(i)
+
+levelOrder(BST.root)
